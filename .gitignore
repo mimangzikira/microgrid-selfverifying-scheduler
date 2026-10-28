@@ -1,0 +1,39 @@
+# ===== 绝不提交 =====
+# 模型凭据（仅本机保存）
+.env
+.env.*
+*.key
+**/secret*
+
+# AGH 运行实例：含会话正文与用户输入
+.agh/
+
+# ===== 不分发 =====
+# AGH 是外部平台，体积大，从官方仓库获取（见 README「许可与致谢」）
+vendor/
+
+# ===== 依赖与缓存 =====
+**/node_modules/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ===== 运行时产出（可随时重新生成，不入库）=====
+evidence/runs/
+reports/
+out/
+
+# ===== 数据 =====
+# 原始算例来自赛事附件，版权属组委会，不随仓库分发。
+# 任何人可用 python tools/make_sample_data.py 生成同格式的合成算例。
+data/park_day.csv
+data/synth_day.csv
+
+# ===== 其它 =====
+*.log
+Thumbs.db
+desktop.ini
+.DS_Store
+/Python/
+_github/
+_submit/

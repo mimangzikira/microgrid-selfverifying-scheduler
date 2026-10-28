@@ -1,0 +1,14 @@
+# 统一换行符：仓库内一律 LF，检出到 Windows 时由 git 处理
+* text=auto eol=lf
+
+# 脚本
+*.py   text eol=lf
+*.ps1  text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.csv  text eol=lf
+*.txt  text eol=lf
+
+# 二进制
+*.png  binary
+*.zip  binary

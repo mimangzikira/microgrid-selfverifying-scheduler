@@ -1,0 +1,24 @@
+{
+  "_comment": "园区微网调度算例参数。所有量均为每小时一段、共 24 段。",
+  "periods": 24,
+  "period_hours": 1.0,
+
+  "storage": {
+    "capacity_kwh": 2000.0,
+    "power_kw": 500.0,
+    "eta_charge": 0.95,
+    "eta_discharge": 0.95,
+    "soc_init_kwh": 400.0,
+    "soc_min_kwh": 100.0,
+    "soc_terminal_kwh": 400.0
+  },
+
+  "grid": {
+    "import_limit_kw": 1500.0,
+    "export_allowed": false
+  },
+
+  "pv": {
+    "curtail_allowed": true
+  }
+}

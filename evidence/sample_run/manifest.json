@@ -1,0 +1,76 @@
+{
+  "schema": "mg.run/v1",
+  "status": "ok",
+  "injection": null,
+  "stages": [
+    {
+      "stage": "load",
+      "status": "ok",
+      "elapsed_s": 0.001,
+      "summary": {
+        "n_periods": 24,
+        "period_hours": 1.0,
+        "total_load_kwh": 12394.2,
+        "total_pv_kwh": 3174.0,
+        "net_load_kwh": 9220.2,
+        "peak_load_kw": 647.9,
+        "price_min": 0.3,
+        "price_max": 1.2,
+        "price_tiers": [
+          0.3,
+          0.72,
+          1.2
+        ],
+        "soc_init_kwh": 400.0,
+        "soc_terminal_kwh": 400.0
+      }
+    },
+    {
+      "stage": "solve",
+      "status": "ok",
+      "elapsed_s": 0.008,
+      "objective_cny": 4651.417346,
+      "solver": {
+        "name": "scipy.linprog",
+        "method": "highs",
+        "status": 0,
+        "success": true
+      }
+    },
+    {
+      "stage": "verify",
+      "status": "ok",
+      "elapsed_s": 0.02,
+      "n_checks": 11,
+      "n_failed": 0,
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "n_failed": 0
+        }
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": true,
+      "n_failed": 0
+    }
+  ],
+  "objective_cny": 4651.417346,
+  "bounds": {
+    "lower_bound_cny": 2766.06,
+    "upper_bound_cny": 6167.130158,
+    "upper_source": "greedy_tou",
+    "objective_cny": 4651.417346
+  },
+  "degraded": false,
+  "degrade_reason": null,
+  "outputs": {
+    "solution": "evidence\\runs\\normal\\solution.json",
+    "verification": "evidence\\runs\\normal\\verification.json"
+  },
+  "elapsed_s": 0.02
+}

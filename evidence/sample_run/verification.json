@@ -1,0 +1,160 @@
+{
+  "passed": true,
+  "n_checks": 11,
+  "n_failed": 0,
+  "checks": [
+    {
+      "id": "V1.1",
+      "name": "功率平衡残差",
+      "kind": "exact",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "max_abs_residual": 1.1368683772161603e-13,
+        "tolerance": 1e-06
+      },
+      "note": ""
+    },
+    {
+      "id": "V1.2",
+      "name": "储荷递推残差",
+      "kind": "exact",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "max_abs_residual": 6.842810762464069e-10,
+        "tolerance": 1e-06
+      },
+      "note": ""
+    },
+    {
+      "id": "V1.3",
+      "name": "变量上下限",
+      "kind": "exact",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "violations": 0
+      },
+      "note": ""
+    },
+    {
+      "id": "V1.4",
+      "name": "端面储荷条件",
+      "kind": "exact",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "soc_init_dev": 0.0,
+        "soc_terminal_dev": 0.0,
+        "expected": [
+          400.0,
+          400.0
+        ]
+      },
+      "note": ""
+    },
+    {
+      "id": "V1.5",
+      "name": "目标值独立重算",
+      "kind": "exact",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "reported": 4651.417346,
+        "recomputed": 4651.417346,
+        "rel_error": 5.596556751548361e-11
+      },
+      "note": ""
+    },
+    {
+      "id": "V2.1",
+      "name": "解析下界 ≤ 方案成本",
+      "kind": "sandwich",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "lower_bound": 2766.06,
+        "objective": 4651.417346,
+        "derivation": "max(min_price×净负荷总量, Σ price×max(0,load−pv−P_max))"
+      },
+      "note": "下界是松弛结果（假设可以不损失地把能量挪到最低价时段），因此偏松；它的作用是兜住'成本算得比理论上限还低'这种硬错误。"
+    },
+    {
+      "id": "V2.2",
+      "name": "方案成本 ≤ 可行上界",
+      "kind": "sandwich",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "upper_bound": 6167.130158,
+        "upper_source": "greedy_tou",
+        "candidates": {
+          "no_storage": 6363.462,
+          "greedy_tou": 6167.130158
+        },
+        "objective": 4651.417346
+      },
+      "note": "上界来自规则方案，必定可行；方案成本高于它就说明没解到最优。"
+    },
+    {
+      "id": "V2.3",
+      "name": "夹逼区间与相对间隙",
+      "kind": "sandwich",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "lower_bound": 2766.06,
+        "upper_bound": 6167.130158,
+        "objective": 4651.417346,
+        "relative_gap": 0.73119
+      },
+      "note": "该间隙只用来衡量夹逼有多紧，不构成失败条件；精确性由 V1 与 V3 保证。"
+    },
+    {
+      "id": "V3.1",
+      "name": "无储能功率",
+      "kind": "differential",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "solver_objective": 6363.462,
+        "closed_form": 6363.462,
+        "rel_error": 1.4292451212452093e-16
+      },
+      "note": "储能功率置 0：无法移峰，只能逐时买净缺口"
+    },
+    {
+      "id": "V3.2",
+      "name": "电价拉平（无套利空间）",
+      "kind": "differential",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "solver_objective": 7376.16,
+        "closed_form": 7376.16,
+        "rel_error": 1.2330192156527625e-16
+      },
+      "note": "电价拉平为 0.80：无套利空间，储能只损失电量"
+    },
+    {
+      "id": "V3.3",
+      "name": "光伏全网过剩且平价",
+      "kind": "differential",
+      "passed": true,
+      "skipped": false,
+      "detail": {
+        "solver_objective": 0.0,
+        "closed_form": 0.0,
+        "rel_error": 0.0
+      },
+      "note": "光伏全天过剩（负荷+800）且电价拉平：最优是完全不购电、弃掉余量，成本应为 0"
+    }
+  ],
+  "bounds": {
+    "lower_bound_cny": 2766.06,
+    "upper_bound_cny": 6167.130158,
+    "upper_source": "greedy_tou",
+    "objective_cny": 4651.417346
+  }
+}
