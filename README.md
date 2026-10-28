@@ -8,8 +8,7 @@ catches itself, backtracks, and re-solves. When it genuinely cannot solve, it sa
 
 **English** | [简体中文](README.zh-CN.md)
 
-> Origin: **2026 Jiangsu Province University AI+Science & Engineering Hackathon**
-> (Undergraduate track, team 然智核, entry U070), built on
+> A microgrid dispatch agent that verifies its own answers, built on
 > **[Agnes Harness (AGH)](https://github.com/AgnesAI-Labs/agnes-harness)** as the agent execution substrate.
 
 ---
@@ -78,9 +77,9 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 | | |
 |---|---|
 | **Platform** | Bilibili — public, no login required, no access code |
-| **Length** | about 4 min 40 s (contest requirement: 3–5 min) |
+| **Length** | about 4 min 40 s |
 | **Format** | screen recording, **no narration** — explained entirely by on-screen captions |
-| **Language** | **Chinese captions** (produced for the Chinese-language contest) |
+| **Language** | **Chinese captions** |
 
 **What it covers** (in roughly this order):
 
@@ -287,7 +286,7 @@ git clone https://github.com/<your-name>/mgsched.git
 cd mgsched
 pip install -r requirements.txt
 
-# Generate a synthetic sample case (original competition data is NOT redistributed)
+# Generate a synthetic sample case (the original case data is NOT redistributed)
 python tools/make_sample_data.py
 
 # Full pipeline: load → solve → independent verify
@@ -306,8 +305,8 @@ python tools/mg_run.py --csv data/park_day.csv --params data/params.json \
 python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 ```
 
-> Note: AGH is **not** required for any of the above. Only the agent execution loop
-> (evidenced in `evidence/agh_diagnostics/`) needs AGH installed separately.
+> Note: AGH is **not** required for any of the above. Only the agent execution loop needs AGH
+> installed separately — the code is agnostic to whether it is driven by AGH, by a shell, or by CI.
 
 ---
 
@@ -319,8 +318,8 @@ The original case was compiled from the official attachment of the **2026 CUMCM 
 Undergraduate Mathematical Contest in Modeling) Problem C, "Optimization Modeling and Solution
 of Power Regulation Strategies between a Microgrid and the External Grid"**, published by the
 CUMCM Organizing Committee — by aggregating higher-resolution load / PV / tariff series into a
-24-period hourly case. **Copyright of that data belongs to the contest organizer**, hence it is
-excluded here.
+24-period hourly case. **Copyright of that data belongs to the publishing organization**, hence
+it is excluded here.
 
 `tools/make_sample_data.py` generates a **synthetic case of the same shape** so that anyone can
 clone and run immediately. Its numbers differ, so the resulting costs differ — but the constraint
@@ -359,5 +358,6 @@ Nothing here is a claim about any real park's operation.
   each under its own license.
 - Case conditions referenced from **2026 CUMCM Problem C** (data not redistributed; see above).
 
-**Team:** 然智核 (Ranzhihe) · Undergraduate track · Entry **U070** ·
-2026 Jiangsu Province University AI+Science & Engineering Hackathon.
+---
+
+Built and maintained by **MiMang Zi**. Contributions and issues are welcome.

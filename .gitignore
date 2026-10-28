@@ -24,7 +24,7 @@ reports/
 out/
 
 # ===== 数据 =====
-# 原始算例来自赛事附件，版权属组委会，不随仓库分发。
+# 原始算例来自题目官方附件，版权属题目发布方，不随仓库分发。
 # 任何人可用 python tools/make_sample_data.py 生成同格式的合成算例。
 data/park_day.csv
 data/synth_day.csv

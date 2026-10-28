@@ -7,8 +7,8 @@
 
 [English](README.md) | **简体中文**
 
-> 本项目源自 **2026 江苏省高校 AI+科学与工程创新实践黑客松**（本科生组，队伍「然智核」，参赛编号 U070），
-> 以 **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** 为智能体执行底座。
+> 一个会验算自己答案的园区微网调度智能体，以
+> **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** 为智能体执行底座。
 
 ---
 
@@ -73,9 +73,9 @@
 | | |
 |---|---|
 | **平台** | B 站 —— 公开可访问，无需登录、无提取码 |
-| **时长** | 约 4 分 40 秒（赛事要求 3–5 分钟） |
+| **时长** | 约 4 分 40 秒 |
 | **形式** | 屏幕录制，**无口播** —— 全部讲解以屏上文字卡呈现 |
-| **语言** | **中文文字卡**（为中文赛事录制） |
+| **语言** | **中文文字卡** |
 
 **视频覆盖的内容**（大致按此顺序）：
 
@@ -275,7 +275,7 @@ git clone https://github.com/你的用户名/mgsched.git
 cd mgsched
 pip install -r requirements.txt
 
-# 生成一份合成算例（原始赛事数据不随仓库分发）
+# 生成一份合成算例（原始算例数据不随仓库分发）
 python tools/make_sample_data.py
 
 # 完整流水线：读数据 → 求解 → 独立校验
@@ -294,8 +294,8 @@ python tools/mg_run.py --csv data/park_day.csv --params data/params.json \
 python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 ```
 
-> 说明：以上**全部不需要 AGH**。只有智能体执行闭环（证据在 `evidence/agh_diagnostics/`）
-> 需要另行安装 AGH。
+> 说明：以上**全部不需要 AGH**。只有智能体执行闭环那一段需要另行安装 AGH ——
+> 代码本身不绑定 AGH，可以由 AGH、shell 或 CI 驱动都一样。
 
 ---
 
@@ -306,7 +306,7 @@ python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 本项目的原始算例是在 **2026 年高教社杯全国大学生数学建模竞赛 C 题
 「微网与外部电网电力调控策略的优化建模与求解」**（全国大学生数学建模竞赛组委会发布）
 **官方附件数据**的基础上，把更高时间粒度的负荷、光伏与分时电价**聚合为 1 小时粒度的
-24 时段算例**整理而成。该数据的**版权属于赛事组委会**，因此不随本仓库分发。
+24 时段算例**整理而成。该数据的**版权属于题目发布方**，因此不随本仓库分发。
 
 `tools/make_sample_data.py` 生成**同格式的合成算例**，让任何人 clone 下来即可跑通。
 数值不同，因此**跑出的成本不同**，但约束结构、校验逻辑、自我修复机制完全一致。
@@ -336,6 +336,8 @@ python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 - **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** —— 官方开源智能体执行底座，本项目未修改其源码。
 - **[HiGHS](https://highs.dev/)** —— 经 `scipy.optimize.linprog` 调用的线性规划求解器。
 - **NumPy**（BSD-3-Clause）、**SciPy**（BSD-3-Clause）、**Matplotlib** —— 作为库使用，各自遵循原有许可。
-- 算例条件参考 **2026 年国赛 C 题**（数据不分发，见「数据来源」）。
+- 算例条件参考 **2026 年 CUMCM C 题**（数据不分发，见「数据来源」）。
 
-**参赛信息**：2026 江苏省高校 AI+科学与工程创新实践黑客松 · 本科生组 · 队伍「然智核」· 参赛编号 **U070**。
+---
+
+由 **MiMang Zi** 开发与维护。欢迎提 Issue 或 PR。

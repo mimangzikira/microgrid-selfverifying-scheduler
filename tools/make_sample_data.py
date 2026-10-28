@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""生成一份可用于公开仓库的示例算例（synth_day.csv）。
+"""生成一份可用于公开仓库的示例算例（data/park_day.csv）。
 
 为什么不直接放原始算例数据：
     本项目的原始算例是在「2026 年高教社杯全国大学生数学建模竞赛 C 题」
-    官方附件数据基础上聚合整理而成的，其版权属于赛事组委会，
+    官方附件数据基础上聚合整理而成的，其版权属于题目发布方，
     因此**不随本仓库分发**。
 
     为了让任何人 clone 下来就能立刻跑通，这里提供一个**同格式的合成算例**：
@@ -70,7 +70,7 @@ def build(load_peak_kw: float = 620.0, pv_peak_kw: float = 480.0) -> list[dict]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="生成公开仓库用的合成示例算例")
     # 默认落成 park_day.csv：代码与测试都按这个文件名读取。
-    # 它是**合成**算例，不是原始赛事数据（原始数据版权属组委会，不随仓库分发）。
+    # 它是**合成**算例，不是原始算例数据（原始数据版权属题目发布方，不随仓库分发）。
     ap.add_argument("--out", default=str(ROOT / "data" / "park_day.csv"))
     ap.add_argument("--load-peak", type=float, default=620.0)
     ap.add_argument("--pv-peak", type=float, default=480.0)
@@ -88,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  24 时段；负荷峰值 {args.load_peak} kW，光伏峰值 {args.pv_peak} kW")
     print("  电价三档 0.30 / 0.72 / 1.20 元每千瓦时")
     print("")
-    print("  注意：这是**合成算例**，用于让仓库 clone 即可跑通；它不是原始赛事数据。")
+    print("  注意：这是**合成算例**，用于让仓库 clone 即可跑通；它不是原始算例数据。")
     print("       因此跑出的成本与 README「数据来源」里记录的原始结果不同。")
     return 0
 
