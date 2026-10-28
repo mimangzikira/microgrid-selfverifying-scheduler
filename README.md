@@ -334,10 +334,13 @@ Nothing here is a claim about any real park's operation.
 ## License & Attribution
 
 - Code released under the **MIT License** — see [LICENSE](LICENSE).
+- **This repository does not include Agnes Harness (AGH) source code.** AGH is distributed by its
+  own official repository under its own license; this project only *calls* it and **does not modify it**.
 - **[Agnes Harness (AGH)](https://github.com/AgnesAI-Labs/agnes-harness)** — official open-source
   agent substrate; used unmodified as the execution base.
-- **[HiGHS](https://highs.dev/)** via `scipy.optimize.linprog` — LP solver (BSD-3-Clause via SciPy).
-- **NumPy** (BSD-3-Clause), **SciPy** (BSD-3-Clause), **Matplotlib** (PSF-based) — used as libraries.
+- **[HiGHS](https://highs.dev/)** via `scipy.optimize.linprog` — LP solver.
+- **NumPy** (BSD-3-Clause), **SciPy** (BSD-3-Clause), **Matplotlib** — used as libraries,
+  each under its own license.
 - Case conditions referenced from **2026 CUMCM Problem C** (data not redistributed; see above).
 
 **Team:** 然智核 (Ranzhihe) · Undergraduate track · Entry **U070** ·

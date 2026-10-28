@@ -316,9 +316,10 @@ python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 ## 许可与致谢
 
 - 代码以 **MIT License** 发布，见 [LICENSE](LICENSE)。
-- **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** —— 官方开源智能体执行底座，本项目**未修改其源码**。
+- **本仓库不含 Agnes Harness（AGH）源码**。AGH 由其官方仓库以自有许可分发；本项目仅**调用**它，**未修改其源码**。
+- **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** —— 官方开源智能体执行底座，本项目未修改其源码。
 - **[HiGHS](https://highs.dev/)** —— 经 `scipy.optimize.linprog` 调用的线性规划求解器。
-- **NumPy**（BSD-3-Clause）、**SciPy**（BSD-3-Clause）、**Matplotlib**（PSF 系列许可）—— 作为库使用。
+- **NumPy**（BSD-3-Clause）、**SciPy**（BSD-3-Clause）、**Matplotlib** —— 作为库使用，各自遵循原有许可。
 - 算例条件参考 **2026 年国赛 C 题**（数据不分发，见「数据来源」）。
 
 **参赛信息**：2026 江苏省高校 AI+科学与工程创新实践黑客松 · 本科生组 · 队伍「然智核」· 参赛编号 **U070**。

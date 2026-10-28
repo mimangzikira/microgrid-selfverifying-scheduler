@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 马悠然（队伍：然智核 / 参赛编号 U070）
+Copyright (c) 2026 马悠然 (Ma Youran)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-备注：
-- 本仓库不含 Agnes Harness（AGH）源码。AGH 由其官方仓库以自有许可分发
-  （https://github.com/AgnesAI-Labs/agnes-harness），本项目仅调用、未修改。
-- 第三方依赖 NumPy / SciPy / Matplotlib 均遵循各自许可。
