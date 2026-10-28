@@ -73,11 +73,29 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 
 ## 2. Demo Video
 
-**▶ [Watch the 4-minute demo (Bilibili)](https://www.bilibili.com/video/BV1iTpm6pERf/)**
+**▶ [Watch the demo on Bilibili](https://www.bilibili.com/video/BV1iTpm6pERf/)** · about 4 min 40 s
 
-The video shows, without narration (on-screen captions):
-the agent planning the task, invoking tools, catching an injected generator defect,
-self-repairing, and the mutation coverage matrix.
+| | |
+|---|---|
+| **Platform** | Bilibili — public, no login required, no access code |
+| **Length** | about 4 min 40 s (contest requirement: 3–5 min) |
+| **Format** | screen recording, **no narration** — explained entirely by on-screen captions |
+| **Language** | **Chinese captions** (produced for the Chinese-language contest) |
+
+**What it covers** (in roughly this order):
+
+1. **The problem** — a microgrid dispatch plan you have no reason to trust
+2. **The design** — generation/verification separation; the verifier does not import the generator
+3. **A live run** — the agent plans the task, invokes tools, solves, and runs the 11 independent checks
+4. **An infeasible case** — the plan is refused and reported as a failure rather than handed over
+5. **A deliberately broken generator** — the verifier catches it, then the system backtracks and repairs itself
+6. **The mutation coverage matrix** — 8 defect classes, 8/8 caught
+7. **Wrap-up** — what this is worth and where it generalises
+
+> The video is Chinese-language with captions only. The English README and the source code are
+> the technical reference. The verification and self-repair behaviour shown is reproducible from
+> source **without AGH** (see [Quick Start](#quick-start)); only the agent execution loop was
+> run inside AGH.
 
 ---
 
