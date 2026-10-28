@@ -129,6 +129,22 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 | `tools/make_sample_data.py` | Synthetic sample generator | Lets anyone clone and run (see Data Provenance) |
 | `tools/scan_secrets.py` | Pre-publish secret scan | Exit code 0 required before publishing |
 
+### The 11 checks
+
+| ID | Check | Kind | What it verifies |
+|---|---|---|---|
+| V1.1 | Power balance residual | exact | `g + d + pv = load + c + x` every period, tol `1e-6` |
+| V1.2 | SoC recursion residual | exact | `s[t+1] = s[t] + ηc·c − d/ηd` every period, tol `1e-6` |
+| V1.3 | Variable bounds | exact | `0 ≤ g ≤ import_limit`, `0 ≤ c,d ≤ power_kw`, `0 ≤ x ≤ pv`, `soc_min ≤ s ≤ capacity` |
+| V1.4 | Terminal SoC condition | exact | `s[0] = soc_init`, `s[T] = soc_terminal` |
+| V1.5 | Independent objective recomputation | exact | Recomputes `Σ price·g·dt` from the dispatch and compares with the reported cost |
+| V2.1 | Analytic lower bound ≤ cost | sandwich | Cost cannot be below a closed-form relaxation bound |
+| V2.2 | Cost ≤ feasible upper bound | sandwich | Cost cannot exceed a known-feasible rule-based plan |
+| V2.3 | Gap reporting | sandwich | Prints the relative gap of the sandwich honestly |
+| V3.1 | No-storage degenerate case | differential | Generator (as a black box) must reproduce the closed form |
+| V3.2 | Flat-price degenerate case | differential | Same — no arbitrage opportunity left |
+| V3.3 | PV-surplus flat-price case | differential | Same — optimal cost is identically 0 |
+
 ### Implementation notes
 
 - **Generator.** Decision variables per period: grid import `g`, charge `c`, discharge `d`,
