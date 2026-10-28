@@ -1,19 +1,43 @@
 # Self-Verifying Microgrid Dispatch Agent
 
-**A microgrid dispatch agent whose verifier never imports the generator.**
+**English** | [简体中文](README.zh-CN.md)
+
+<div align="center">
+
+### A microgrid dispatch agent whose verifier never imports the generator.
 
 Give it a park's load, PV, and time-of-use tariff curves. It models the day-ahead dispatch
 problem, solves it, **and independently verifies its own answer**. When the answer is wrong it
 catches itself, backtracks, and re-solves. When it genuinely cannot solve, it says so.
 
-**English** | [简体中文](README.zh-CN.md)
+<img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10 or later" />
+<img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" />
+<img src="https://img.shields.io/badge/tests-12%2F12-brightgreen" alt="Test suite: 12 of 12 cases pass" />
+<img src="https://img.shields.io/badge/verifier-11%20independent%20checks-2F4F4F" alt="Verifier: 11 independent checks" />
+<img src="https://img.shields.io/badge/mutation%20coverage-8%2F8-f59e0b" alt="Mutation coverage: 8 of 8 defect classes caught" />
 
-> A microgrid dispatch agent that verifies its own answers, built on
-> **[Agnes Harness (AGH)](https://github.com/AgnesAI-Labs/agnes-harness)** as the agent execution substrate.
+Built on **[Agnes Harness (AGH)](https://github.com/AgnesAI-Labs/agnes-harness)** as the agent execution substrate.
+
+</div>
+
+<details>
+<summary><kbd>Contents</kbd></summary>
+
+- [Overview](#overview)
+- [Demo video](#demo-video)
+- [Architecture](#architecture)
+- [Integration standards](#integration-standards)
+- [Quick start](#quick-start)
+- [Data provenance](#data-provenance)
+- [Known limitations](#known-limitations)
+- [FAQ](#faq)
+- [License and attribution](#license-and-attribution)
+
+</details>
 
 ---
 
-## 1. Project Overview
+## Overview
 
 ### Background
 
@@ -70,7 +94,9 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 
 ---
 
-## 2. Demo Video
+---
+
+## Demo video
 
 **▶ [Watch the demo on Bilibili](https://www.bilibili.com/video/BV1iTpm6pERf/)** · about 4 min 40 s
 
@@ -98,7 +124,9 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 
 ---
 
-## 3. Architecture
+---
+
+## Architecture
 
 ```
                 AGH substrate (sessions / tool dispatch / approvals / logs)
@@ -162,9 +190,11 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 
 ---
 
-## 4. Integration Standards
+---
 
-### 4.1 Input time series — CSV contract
+## Integration standards
+
+### Input time series — CSV contract
 
 `--csv <path>`, UTF-8 (BOM tolerated), header required, one row per period:
 
@@ -178,7 +208,7 @@ claiming *"I checked it"* is not verification — self-review is not verificatio
 
 Row count must equal `params.periods`.
 
-### 4.2 Parameters — JSON contract
+### Parameters — JSON contract
 
 `--params <path>`:
 
@@ -203,7 +233,7 @@ Row count must equal `params.periods`.
 Validation: `0 ≤ soc_min ≤ soc_init, soc_terminal ≤ capacity`; `0 < eta ≤ 1`;
 `import_limit_kw ≥ 0`. Violations raise `E_*` before the solver runs.
 
-### 4.3 Output contract — exit codes
+### Output contract — exit codes
 
 | Exit | `status` | Meaning |
 |---|---|---|
@@ -216,7 +246,7 @@ Validation: `0 ≤ soc_min ≤ soc_init, soc_terminal ≤ capacity`; `0 < eta �
 > Downstream code should branch on `manifest.json` → `status`, not only on the shell exit code
 > (some shells normalise non-zero codes to 1).
 
-### 4.4 Machine-readable results
+### Machine-readable results
 
 `manifest.json` (excerpt):
 
@@ -237,7 +267,7 @@ Validation: `0 ≤ soc_min ≤ soc_init, soc_terminal ≤ capacity`; `0 < eta �
 `verification.json` carries the 11 checks with `id`, `name`, `kind` (`exact` / `sandwich` /
 `differential`), `passed`, `skipped`, `detail`.
 
-### 4.5 Error codes
+### Error codes
 
 All validation errors are structured `{"code": "E_*", "message": ..., "detail": {...}}`.
 
@@ -251,7 +281,7 @@ All validation errors are structured `{"code": "E_*", "message": ..., "detail": 
 
 25 codes in total, all raised before the solver runs (except `E_SOLVER_FAILED`).
 
-### 4.6 Fault-injection interface
+### Fault-injection interface
 
 `--inject <kind>` (11 kinds). Two families:
 
@@ -262,7 +292,7 @@ All validation errors are structured `{"code": "E_*", "message": ..., "detail": 
 **Generator-side modelling defects** (data untouched — exercises separation):
 `defect_no_terminal_soc` `defect_no_storage_power`
 
-### 4.7 Integrating your own model or verifier
+### Integrating your own model or verifier
 
 Both sides are replaceable independently:
 
@@ -276,7 +306,7 @@ Both sides are replaceable independently:
 
 ---
 
-## Quick Start
+## Quick start
 
 **Requirements:** Python ≥ 3.10 (developed on 3.13), NumPy / SciPy / Matplotlib.
 No GPU, no commercial software.
@@ -310,7 +340,7 @@ python tools/mg_show.py --run evidence/runs/demo_defect --evidence
 
 ---
 
-## Data Provenance
+## Data provenance
 
 **The original case data is not redistributed in this repository.**
 
@@ -334,7 +364,7 @@ Nothing here is a claim about any real park's operation.
 
 ---
 
-## Known Limitations
+## Known limitations
 
 - 24-period **deterministic** LP: no stochastic scenarios, demand response, battery cycle-life
   degradation, or grid settlement rules.
@@ -346,7 +376,37 @@ Nothing here is a claim about any real park's operation.
 
 ---
 
-## License & Attribution
+## FAQ
+
+**Do I need AGH to run this?**
+No. The solver, the 11-check verifier, the self-repair loop, the test suite and the mutation
+matrix are plain Python — `python tests/run_tests.py` needs only NumPy/SciPy. AGH is the agent
+substrate that drives the tools; the code is agnostic to whether it is driven by AGH, a shell, or CI.
+
+**Why isn't the original case data in the repository?**
+Its copyright belongs to the publishing organization (see [Data provenance](#data-provenance)).
+`tools/make_sample_data.py` generates a synthetic case of the same shape so the repository runs
+out of the box; only the resulting cost figures differ.
+
+**Isn't V2 just a restatement of the answer?**
+No — V2 is a sandwich, and it is **admittedly loose**. The verifier prints its relative gap
+instead of hiding it. Precision comes from V1 (exact residuals) and V3 (closed-form degenerate
+cases); V2 exists to catch gross errors such as a cost below the theoretical floor.
+
+**If the system retries, isn't the retry self-certifying?**
+No. The repaired plan must pass the **same independent verification**. A retry is another search,
+never a source of trust — that is precisely what `status = recovered` records.
+
+**How do I know the verifier has no blind spots?**
+You do not, and we do not claim it. `tools/mutate_verify.py` measures coverage over 8 enumerated
+defect classes (8/8 caught) and the boundary is stated explicitly.
+
+**Can I plug in my own generator or verifier?**
+Yes. Both sides are replaceable independently — see [Integration standards](#integration-standards).
+
+---
+
+## License and attribution
 
 - Code released under the **MIT License** — see [LICENSE](LICENSE).
 - **This repository does not include Agnes Harness (AGH) source code.** AGH is distributed by its

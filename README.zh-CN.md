@@ -1,18 +1,43 @@
 # 会自己验算自己的园区微网调度智能体
 
-**生成与校验分离的微网调度智能体 —— 校验侧判定可行性时不 import 生成侧任何代码。**
+[English](README.md) | **简体中文**
+
+<div align="center">
+
+### 生成与校验分离的微网调度智能体 —— 校验侧判定可行性时不 import 生成侧任何代码。
 
 给它一个园区的负荷、光伏与分时电价曲线，它自己建模、求解、**并独立验算**调度方案；
 算错了能自己发现、自己回退重算，算不出来就如实说算不出来。
 
-[English](README.md) | **简体中文**
+<img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10 或更高" />
+<img src="https://img.shields.io/badge/license-MIT-green" alt="许可证：MIT" />
+<img src="https://img.shields.io/badge/tests-12%2F12-brightgreen" alt="测试套件：12 例全部通过" />
+<img src="https://img.shields.io/badge/verifier-11%20independent%20checks-2F4F4F" alt="独立校验：11 项检查" />
+<img src="https://img.shields.io/badge/mutation%20coverage-8%2F8-f59e0b" alt="变异覆盖：8 类缺陷全部被抓住" />
 
-> 一个会验算自己答案的园区微网调度智能体，以
-> **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** 为智能体执行底座。
+以 **[Agnes Harness（AGH）](https://github.com/AgnesAI-Labs/agnes-harness)** 为智能体执行底座。
+
+</div>
+
+<details>
+<summary><kbd>目录</kbd></summary>
+
+- [项目介绍](#项目介绍)
+- [视频介绍](#视频介绍)
+- [架构介绍](#架构介绍)
+- [集成标准](#集成标准)
+- [快速开始](#快速开始)
+- [数据来源](#数据来源)
+- [已知限制](#已知限制)
+- [常见问题](#常见问题)
+- [许可与致谢](#许可与致谢)
+
+</details>
 
 ---
 
-## 一、项目介绍（Project Overview）
+## 项目介绍
+
 
 ### 项目背景
 
@@ -66,7 +91,7 @@
 
 ---
 
-## 二、视频介绍（Demo Video）
+## 视频介绍
 
 **▶ [在 B 站观看演示](https://www.bilibili.com/video/BV1iTpm6pERf/)** · 约 4 分 40 秒
 
@@ -93,7 +118,7 @@
 
 ---
 
-## 三、架构介绍（Architecture）
+## 架构介绍
 
 ```
                 AGH 底座（会话 / 工具调度 / 审批 / 日志）
@@ -154,9 +179,9 @@
 
 ---
 
-## 四、集成标准（Integration Standards）
+## 集成标准
 
-### 4.1 输入时序 — CSV 契约
+### 输入时序 — CSV 契约
 
 `--csv <路径>`，UTF-8（容忍 BOM），必须有表头，每时段一行：
 
@@ -170,7 +195,7 @@
 
 行数必须等于 `params.periods`。
 
-### 4.2 参数 — JSON 契约
+### 参数 — JSON 契约
 
 `--params <路径>`：
 
@@ -195,7 +220,7 @@
 校验规则：`0 ≤ soc_min ≤ soc_init, soc_terminal ≤ capacity`；`0 < eta ≤ 1`；`import_limit_kw ≥ 0`。
 违反者在进入求解器前抛 `E_*`。
 
-### 4.3 输出契约 — 退出码
+### 输出契约 — 退出码
 
 | 退出码 | `status` | 含义 |
 |---|---|---|
@@ -208,7 +233,7 @@
 > 下游代码应分支判断 `manifest.json` 的 `status`，而不是只看 shell 退出码
 > （某些外壳会把非零码归一化为 1）。
 
-### 4.4 机读结果
+### 机读结果
 
 `manifest.json` 片段：
 
@@ -229,7 +254,7 @@
 `verification.json` 携带 11 项检查，每项含 `id`、`name`、`kind`（`exact` / `sandwich` /
 `differential`）、`passed`、`skipped`、`detail`。
 
-### 4.5 错误码
+### 错误码
 
 所有校验错误都是结构化的 `{"code": "E_*", "message": ..., "detail": {...}}`。
 
@@ -243,7 +268,7 @@
 
 共 25 个错误码；除 `E_SOLVER_FAILED` 外，其余全部在进入求解器之前抛出。
 
-### 4.6 故障注入接口
+### 故障注入接口
 
 `--inject <kind>`，共 11 种，分两类：
 
@@ -252,7 +277,7 @@
 
 **生成侧建模缺陷**（不动数据，考核分离性）：`defect_no_terminal_soc` `defect_no_storage_power`
 
-### 4.7 接入自己的模型或校验器
+### 接入自己的模型或校验器
 
 两侧可独立替换：
 
@@ -326,6 +351,34 @@ python tools/mg_show.py --run evidence/runs/demo_defect --evidence
   精确性仍由 V1/V3 保证，它们不依赖界。
 - 变异矩阵只覆盖已枚举的 8 类缺陷 —— **不声称零盲区**。
 - 自我修复是单次回退，不是对方案空间的通用搜索。
+
+---
+
+## 常见问题
+
+**跑这个需要装 AGH 吗？**
+不需要。求解器、11 项独立校验、自我修复循环、测试套件与变异矩阵都是纯 Python ——
+`python tests/run_tests.py` 只需要 NumPy / SciPy。AGH 是驱动这些工具的智能体底座；
+代码本身不绑定 AGH，由 AGH、shell 或 CI 驱动都一样。
+
+**为什么仓库里没有原始算例数据？**
+其版权属于题目发布方（见 [数据来源](#数据来源)）。`tools/make_sample_data.py`
+生成同格式的合成算例，让仓库 clone 下来即可跑通；只有跑出的成本数字不同。
+
+**V2 的夹逼界是不是在复述答案？**
+不是。V2 是一个夹逼区间，而且**它确实是松的** —— 报告里如实打印相对间隙，而不是藏起来。
+精确性来自 V1（精确残差）与 V3（闭式解退化算例）；V2 的作用是兜住"成本低于理论下界"这类硬错误。
+
+**系统会重试，那重试算不算自我认证？**
+不算。修复后的方案必须通过**同一套独立校验**。重试只是"再搜一次"，**不是信任的来源** ——
+`status = recovered` 记录的正是这件事。
+
+**怎么知道校验器没有盲区？**
+不知道，也不这么宣称。`tools/mutate_verify.py` 在已枚举的 8 类缺陷上测量覆盖面（8/8 被抓住），
+边界在文档里写明。
+
+**可以接入我自己的生成侧或校验侧吗？**
+可以，两侧可独立替换 —— 见 [集成标准](#集成标准)。
 
 ---
 
